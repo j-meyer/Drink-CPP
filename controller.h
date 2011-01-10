@@ -102,9 +102,9 @@ class Controller
 		int drop ( std::string machine, std::string user, int slot );
 		void shutdown ( bool restart );
 		int getCredits ( std::string user );
-		void editCredits(std::string user, int credits);
-		void editUser( std::string user, int credits, bool admin);
-		void editUser( std::string user, int credits);
+		bool editCredits(std::string user, int credits);
+		bool editUser( std::string user, int credits, bool admin);
+		bool editUser( std::string user, int credits);
 		int getCost ( std::string machine, int slot );
 		std::vector<int> getValidSlots ( std::string machine );
 		std::vector<std::string> getStats ( std::string machine );
