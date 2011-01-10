@@ -211,6 +211,7 @@ int Controller::getCost ( std::string machine, int slotNum )
 int Controller::getTemp ( std::string machine )
 {
     ///\todo Implement, -2000 means that there was a problem getting the temp
+    ///\todo Change -2000 to a static const
     if ( machine != "BD" )
     {
         return -2000;
@@ -223,10 +224,12 @@ int Controller::getTemp ( std::string machine )
 /*!\brief Adds or subtracts credits to a user.
  * \param user the user to edit credits for
  * \param credits the amount of credits to add or remove
+ * \return whether or not the edit was succesful
  */
-void Controller::editCredits ( std::string user, int credits )
+bool Controller::editCredits ( std::string user, int credits )
 {
     ///\todo Implement adding credits to a user
+    return false;
 }
 /*!\brief Adds a new user to the DRINK system
  * \param username the user to add
@@ -245,7 +248,7 @@ bool Controller::addUser ( std::string username )
  * \param quantity the amount available
  * \param numDropped the amount already dropped
  * \param enabled whether or not this slot is enabled
- * \return whether or not adding the new user was succesful
+ * \return whether or not editing the slot was succesful
  */
 bool Controller::editSlot ( std::string machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled )
 {
@@ -255,17 +258,21 @@ bool Controller::editSlot ( std::string machine,int slotnum, std::string name, i
 /*!\brief Edits an existing user.
  * \param user the user to edit
  * \param credits the amount of credits to add or remove
+ * \return whether or not the edit was succesful 
  */
-void Controller::editUser ( std::string user, int credits )
+bool Controller::editUser ( std::string user, int credits )
 {
     ///\todo implement this
+    return false;
 }
 /*!\brief Edits an existing user.
  * \param user the user to edit
  * \param credits the amount of credits to add or remove
  * \param admin either enables admin access or removes it
+ * \return whether or not the edit was succesful
  */
-void Controller::editUser ( std::string user, int credits, bool admin )
+bool Controller::editUser ( std::string user, int credits, bool admin )
 {
     ///\todo implement this
+    return false;
 }
