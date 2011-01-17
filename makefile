@@ -16,8 +16,8 @@ controller.o : controller.h controller.cpp
 		g++ -Wall -DDEBUG -Wextra -c -I/usr/include/mysql controller.h controller.cpp
 
 clean:
-		rm Sunday unittest1	
+		rm -f Sunday
 
 realclean:
-		rm Sunday unittest1 *.h.* *.o
+		rm -f Sunday *.h.* *.o
 
