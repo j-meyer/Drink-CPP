@@ -88,6 +88,7 @@ class Controller
 		static const float version = .2;
 		static Controller* Instance();
 		static ErrorMessages* err;
+		~Controller();
 		bool authUser ( std::string user, std::string pass );
 		bool addUser(std::string username);
 		bool isAvailable();		

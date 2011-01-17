@@ -16,13 +16,20 @@ ErrorMessages* Controller::err = 0;
  */
 Controller* Controller::Instance()
 {
-    ///\todo Add a deconstructor for this
     if ( _instance == 0 )
     {
         _instance = new Controller;
         err = new ErrorMessages;
     }
     return _instance;
+}
+
+/*!\brief Frees up any memory allocated during construction.
+ *
+ */
+Controller::~Controller()
+{
+    delete ( Instance() );
 }
 
 /*!\brief Returns whether or not this user/pass is valid.
@@ -258,7 +265,7 @@ bool Controller::editSlot ( std::string machine,int slotnum, std::string name, i
 /*!\brief Edits an existing user.
  * \param user the user to edit
  * \param credits the amount of credits to add or remove
- * \return whether or not the edit was succesful 
+ * \return whether or not the edit was succesful
  */
 bool Controller::editUser ( std::string user, int credits )
 {
