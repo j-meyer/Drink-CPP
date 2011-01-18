@@ -642,8 +642,8 @@ int Command::editslot ( std::vector<std::string> commands )
             return sendMessage ( 409 );
         }
         //If the name of the item isn't wrapped in "
-        ///\TODO: replace this with a regex
-        if ( commands[2].at ( 0 ) != '"' || commands[2].at ( commands[2].length()-1 ) != '"' )
+        boost::regex quotation ( "\".*\"" );
+        if ( ! boost::regex_match ( commands[2].c_str(), quotation ) )
         {
             return sendMessage ( 406 );
         }
@@ -659,8 +659,9 @@ int Command::editslot ( std::vector<std::string> commands )
         {
             return sendMessage ( 405 );
         }
-        ///\todo:replace with regex
-        if ( ( commands[6] != "true" ) && ( commands[6] != "false" ) )
+
+        boost::regex boolReg ( "true|false" , boost::regex::perl|boost::regex::icase );
+        if ( ! boost::regex_match ( commands[6].c_str(), boolReg ) )
         {
             return sendMessage ( 404 );
         }
@@ -702,25 +703,25 @@ int Command::edituser ( std::vector<std::string> commands )
     }
     else if ( commands.size() == 4 )
     {
-        if ( commands[3] != "false" && commands[3] != "true" )
+        boost::regex boolReg ( "true|false" , boost::regex::perl|boost::regex::icase );
+        if ( ! boost::regex_match ( commands[3].c_str(), boolReg ) )
         {
             return sendMessage ( 400 );
         }
-        boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
+        boost::regex numbers ( "-{0,1}[[:digit:]]+" ); //used to verify that input is all numbers
         if ( ( ! boost::regex_match ( commands[2].c_str(), numbers ) ) )
         {
             return sendMessage ( 402 );
         }
-        ///\todo need to add a check to see if this is just a negative number,
-        ///need to pull out the check to a seperate function
-
         ///\todo add a unit test for editing a user with a negative number
-        control->editUser ( commands[1], atoi ( commands[2].c_str() ), commands[3] == "true" );
+        boost::regex trueReg ( "true" , boost::regex::perl|boost::regex::icase );
+        control->editUser ( commands[1], atoi ( commands[2].c_str() ),
+                            boost::regex_match ( commands[3].c_str(), trueReg ) );
         return sendMessage ( 0 );
     }
     else if ( commands.size() == 3 )
     {
-        boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
+        boost::regex numbers ( "-{0,1}[[:digit:]]+" );//used to verify that input is all numbers
         if ( ! boost::regex_match ( commands[2].c_str(), numbers ) )
         {
             return sendMessage ( 402 );
