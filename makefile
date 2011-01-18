@@ -10,7 +10,7 @@ sunday.o : sunday.cpp sunday.h command.o controller.o
 		g++ -Wall -Wextra -DDEBUG -c sunday.h sunday.cpp 
 
 command.o : command.h command.cpp controller.h
-		g++ -Wall -Wextra -DDEBUG -c command.h command.cpp 
+		g++ -Wall -Wextra -DDEBUG -c command.h command.cpp
 
 controller.o : controller.h controller.cpp
 		g++ -Wall -DDEBUG -Wextra -c -I/usr/include/mysql controller.h controller.cpp

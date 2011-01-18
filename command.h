@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "controller.h"
+#include <boost/regex.hpp>
 #ifdef DEBUG
 #include <iostream>
 #endif
@@ -23,7 +24,7 @@ class Command
 public:
     Command ( int num, std::string machineName, int acceptedSock );
     int interpretCommand ( char command[], int length );
-    ///\todo switch to private
+    ///\todo switch to private, currently public for debugging purposes
 public:
     //instance shit
     ///The socket

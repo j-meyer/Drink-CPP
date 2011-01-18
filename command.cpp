@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <sstream>
 #include <stdio.h>
+#include <boost/regex.hpp>
+
 
 /*!\brief Command constructor
  * \param num the user number, not really used for anything right now, might
@@ -120,18 +122,23 @@ int Command::drop ( std::vector<std::string> commands )
     std::cout << "user: " << userNum << std::endl;
 #endif
     //DROP <slot index> [delay]
-    char cset[] = "1234567890";//Used to check if something is all #'s
+    boost::regex numbers ( "[[:digit:]]+" );//"\d+" doesn't work
     if ( !authenticated )
     {
         return sendMessage ( 204 );
     }
     else if ( commands.size() == 3 )
     {
-        if ( strspn ( commands[1].c_str(),cset ) != commands[1].length() )
+        //this is to check if this all numbers
+        if ( ! boost::regex_match ( commands[1].c_str(), numbers ) )
         {
+#ifdef DEBUG
+            std::cout << "Line 139 - Regex Failed" << std::endl;
+            std::cout << commands[1].c_str() << "*" << std::endl;
+#endif
             return sendMessage ( 409 );
         }
-        else if ( strspn ( commands[2].c_str(),cset ) != commands[2].length() )
+        else if ( ! boost::regex_match ( commands[2].c_str(), numbers ) )
         {
             return sendMessage ( 403 );
         }
@@ -165,7 +172,7 @@ int Command::drop ( std::vector<std::string> commands )
     }
     else if ( ( commands.size() == 2 ) )
     {
-        if ( strspn ( commands[1].c_str(),cset ) != commands[1].length() )
+        if ( ! boost::regex_match ( commands[1].c_str(), numbers ) )
         {
             return sendMessage ( 409 );
         }
@@ -314,6 +321,7 @@ int Command::quit ( std::vector<std::string> commands )
  */
 int Command::rand ( std::vector<std::string> commands )
 {
+    boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
 #ifdef DEBUG
     std::cout << "rand start" << std::endl;
     std::cout << "user: " << userNum << std::endl;
@@ -346,8 +354,7 @@ int Command::rand ( std::vector<std::string> commands )
 #ifdef DEBUG
         std::cout << "commands size == 2" << std::endl;
 #endif
-        char cset[] = "1234567890";//Used to check if something is all #'s
-        if ( strspn ( commands[1].c_str(),cset ) != commands[1].length() )
+        if (	! boost::regex_match ( commands[1].c_str(), numbers ) )
         {
             return sendMessage ( 406 );
         }
@@ -382,7 +389,7 @@ int Command::stat ( std::vector<std::string> commands )
     std::cout << "stat start"<< std::endl;
     std::cout << "user: " << userNum << std::endl;
 #endif
-    char cset[] = "1234567890";//Used to check if something is all #'s
+    boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
     if ( commands.size() == 1 )
     {
         std::vector<std::string> result = control->getStats ( machine );
@@ -393,7 +400,7 @@ int Command::stat ( std::vector<std::string> commands )
         return 0;
     }
     else if ( ( commands.size() == 2 ) &&
-              ( strspn ( commands[1].c_str(),cset ) == commands[1].length() ) )
+              ( boost::regex_match ( commands[1].c_str(), numbers ) ) )
     {
         int slot;
         std::istringstream dss ( commands[1].c_str() );
@@ -523,7 +530,8 @@ int Command::addcredits ( std::vector<std::string> commands )
     std::cout << "addcredits start"	<< std::endl;
     std::cout << "user: " << userNum << std::endl;
 #endif
-    char cset[] = "1234567890";//Used to check if something is all #'s
+    //verify that it is either a positive or negative number
+    boost::regex numbers ( "-{0,1}[[:digit:]]+" );
     if ( !authenticated )
     {
         return sendMessage ( 204 );
@@ -537,11 +545,7 @@ int Command::addcredits ( std::vector<std::string> commands )
         return sendMessage ( 406 );
     }
     //check to make sure the amount of credits is valid
-    else if ( ( strspn ( commands[2].c_str(),cset ) == commands[2].length() )
-              ||
-              ( ( commands[2][0] == '-' ) &&
-                ( strspn ( commands[2].substr ( 1,commands[2].length() ).c_str(),cset )
-                  == commands[2].length()-1 ) ) )
+    else if ( ( boost::regex_match ( commands[2].c_str(), numbers ) ) )
     {
         //Check to make sure the username is valid
         if ( !control->isValidUser ( commands[1] ) )
@@ -630,30 +634,32 @@ int Command::editslot ( std::vector<std::string> commands )
     {
         //0			1			2	 3			4			5			6
         //editslot <slotnum> <name> <cost> <quantity> <num_dropped> <enabled>
-        char cset[] = "1234567890";//Used to check if something is all #'s
-        if ( ( strspn ( commands[1].c_str(),cset ) != commands[1].length() )
+        boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
+        if ( ! boost::regex_match ( commands[1].c_str(), numbers )
              ||
              ( ! control->isValidSlot ( machine,atoi ( commands[1].c_str() ) ) ) )
         {
             return sendMessage ( 409 );
         }
         //If the name of the item isn't wrapped in "
+        ///\TODO: replace this with a regex
         if ( commands[2].at ( 0 ) != '"' || commands[2].at ( commands[2].length()-1 ) != '"' )
         {
             return sendMessage ( 406 );
         }
-        if ( strspn ( commands[3].c_str(),cset ) != commands[3].length() )
+        if ( ! boost::regex_match ( commands[3].c_str(), numbers ) )
         {
             return sendMessage ( 401 );
         }
-        if ( strspn ( commands[4].c_str(),cset ) != commands[4].length() )
+        if ( ! boost::regex_match ( commands[4].c_str(), numbers ) )
         {
             return sendMessage ( 408 );
         }
-        if ( strspn ( commands[5].c_str(),cset ) != commands[5].length() )
+        if ( ! boost::regex_match ( commands[5].c_str(), numbers ) )
         {
             return sendMessage ( 405 );
         }
+        ///\todo:replace with regex
         if ( ( commands[6] != "true" ) && ( commands[6] != "false" ) )
         {
             return sendMessage ( 404 );
@@ -700,8 +706,8 @@ int Command::edituser ( std::vector<std::string> commands )
         {
             return sendMessage ( 400 );
         }
-        char cset[] = "1234567890";//Used to check if something is all #'s
-        if ( ( strspn ( commands[2].c_str(),cset ) != commands[2].length() ) )
+        boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
+        if ( ( ! boost::regex_match ( commands[2].c_str(), numbers ) ) )
         {
             return sendMessage ( 402 );
         }
@@ -714,8 +720,8 @@ int Command::edituser ( std::vector<std::string> commands )
     }
     else if ( commands.size() == 3 )
     {
-        char cset[] = "1234567890";//Used to check if something is all #'s
-        if ( strspn ( commands[2].c_str(),cset ) != commands[2].length() )
+        boost::regex numbers ( "[[:digit:]]+" );//used to verify that input is all numbers
+        if ( ! boost::regex_match ( commands[2].c_str(), numbers ) )
         {
             return sendMessage ( 402 );
         }
