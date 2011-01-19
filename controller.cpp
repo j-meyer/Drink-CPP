@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <stdlib.h>
 #include <mysql.h>
 #ifdef DEBUG
 #include <iostream>
@@ -134,7 +135,14 @@ bool Controller::setAdmin ( std::string user, std::string admin )
  */
 void Controller::shutdown ( bool restart )
 {
-    ///\todo Fix this
+    if ( restart )
+    {
+        system ( "shutdown -r now" );
+    }
+    else
+    {
+        system ( "shutdown now" );
+    }
 }
 /*!\brief Drops a drink.
  * \param machine the machine to drop the drink from

@@ -958,14 +958,12 @@ int Command::shutdown ( std::vector<std::string> commands )
         {
             return sendMessage ( 411 );
         }
-        ///\todo:call restart
         sendMessage ( "OK Rebooting.\n" );
         control->shutdown ( true );
         return 0;
     }
     else if ( commands.size() == 1 )
     {
-        ///\todo:call shutdown
         sendMessage ( "OK Shutting down server.\n" );
         control->shutdown ( false );
         return 0;
