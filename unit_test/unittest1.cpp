@@ -1008,6 +1008,23 @@ TEST ( editUserTest, Normal )
     arg.push_back ( "5" );
     EXPECT_EQ ( 0, command.edituser ( arg ) );
 }
+TEST ( editUserTest, NormalNegCredits )
+{
+      Command::Command command ( 0, machineName, 0 );
+    vector<string> arg;
+    arg.push_back ( "user" );
+    arg.push_back ( adminName );
+    EXPECT_EQ ( 0, command.user ( arg ) );
+    arg.clear();
+    arg.push_back ( "pass" );
+    arg.push_back ( adminPassword );
+    EXPECT_EQ ( 0, command.pass ( arg ) );
+    arg.clear();
+    arg.push_back ( "edituser" );
+    arg.push_back ( accountName );
+    arg.push_back ( "-5" );
+    EXPECT_EQ ( 0, command.edituser ( arg ) );
+}
 //Edit User Set Admin
 TEST ( editUserTest, NormalSetAdmin )
 {

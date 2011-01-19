@@ -713,7 +713,6 @@ int Command::edituser ( std::vector<std::string> commands )
         {
             return sendMessage ( 402 );
         }
-        ///\todo add a unit test for editing a user with a negative number
         boost::regex trueReg ( "true" , boost::regex::perl|boost::regex::icase );
         control->editUser ( commands[1], atoi ( commands[2].c_str() ),
                             boost::regex_match ( commands[3].c_str(), trueReg ) );
