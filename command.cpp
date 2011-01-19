@@ -665,7 +665,7 @@ int Command::editslot ( std::vector<std::string> commands )
         {
             return sendMessage ( 404 );
         }
-        ///\todo implement this call to editslot
+        boost::regex trueReg ( "true" , boost::regex::perl|boost::regex::icase );
         //Everything is correct, so actually edit the slot
         control->editSlot ( machine,
                             atoi ( commands[1].c_str() ),
@@ -673,7 +673,7 @@ int Command::editslot ( std::vector<std::string> commands )
                             atoi ( commands[3].c_str() ),
                             atoi ( commands[4].c_str() ),
                             atoi ( commands[5].c_str() ),
-                            commands[6] == "true" );
+                            boost::regex_match ( commands[6].c_str(), trueReg ) );
         sendMessage ( "OK Changes saved.\n" );
         return 0;
     }
