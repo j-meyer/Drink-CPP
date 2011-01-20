@@ -27,7 +27,7 @@ private:
     ///the file descriptor for the socket
     int sock;
     ///called when a socket is accepted
-    int handleClient ( int acceptedSock );
+    static int handleClient ( int acceptedSock, std::string machine, int userCount );
     ///tokenizes the arg by whitespace and returns it in a vector
     std::vector<std::string> tokenize ( char arg[], int length );
 };

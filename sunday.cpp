@@ -15,6 +15,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <iostream>
+#include <boost/thread.hpp>
 
 /*! \brief SundayServer Constructor
  * \param machineName - The machine name (BigDrink, LittleDrink, Snack, etc.)
@@ -72,22 +73,18 @@ void SundayServer::startServer()
         // 		/*after 1 minute of not touching anything
         //On accept: fork
         int acceptedSock = accept ( sock, 0, 0 );
-        pid_t pID = fork();
-        if ( pID ==0 )  //Then we are the child, so pass off
-        {
-            handleClient ( acceptedSock );
-            exit ( 0 );//avoids zombies by shooting them in the head
-        }
-        else
-        {
-            userCount += 1;
-        }
+        boost::thread newThr ( SundayServer::handleClient, acceptedSock, machine, userCount );
+        ++userCount;
     }//while(keepRunning)
 }
 /*!Handles reading and writing to the client, called once a connection is
  *accepted
+ *\param acceptedSock int specifying the handle for the accepted socket
+ *\param machine string specifying the machine that the client is connecting to
+ *\param userCount the nth user to connect since the server has been started, used for debugging
+ *\return 0 on success, other numbers on error
  */
-int SundayServer::handleClient ( int acceptedSock )
+int SundayServer::handleClient ( int acceptedSock, std::string machine, int userCount )
 {
     char buf[512];   // data buffer
     int len;        // buffer length
