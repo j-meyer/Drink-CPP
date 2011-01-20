@@ -1,7 +1,7 @@
 #Now the actual stuff
 #needs libmysql++-dev to make
 Sunday : sunday.o command.o controller.o main.o
-		g++ main.o command.o sunday.o controller.o -o Sunday -L/usr/lib/mysql -lmysqlclient -lboost_regex-mt
+		g++ main.o command.o sunday.o controller.o -o Sunday -L/usr/lib/mysql -lmysqlclient -lboost_regex-mt -lboost_thread-mt
 
 main.o: main.cpp
 		g++ -Wall -Wextra -DDEBUG -c main.cpp 
