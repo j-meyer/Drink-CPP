@@ -73,4 +73,4 @@ unittest1.o : unittest1.cpp unittest1.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c unittest1.cpp
 
 unittest1 : unittest1.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lboost_regex-mt -lpthread $(USER_DIR)sunday.o $(USER_DIR)controller.o $(USER_DIR)command.o $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lboost_regex-mt -lboost_thread-mt $(USER_DIR)sunday.o $(USER_DIR)controller.o $(USER_DIR)command.o $^ -o $@

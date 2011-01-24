@@ -24,6 +24,20 @@ Controller* Controller::Instance()
     }
     return _instance;
 }
+/*!\brief Default constructor for controller
+ *
+ */
+Controller::Controller()
+{
+#ifdef DEBUG
+    std::cout << "Controller constructor" << std::endl;
+#endif
+    mysqlUsername = "######";
+    mysqlPassword = "######";
+    mysqlServerAddress = "127.0.0.1";
+    ///\todo double check to make sure the database isn't going to kick off an open connection if it idles too long
+    ///\todo add code to handle if the program loses a connection with the database
+}
 
 /*!\brief Frees up any memory allocated during construction.
  *
@@ -42,6 +56,7 @@ Controller::~Controller()
  */
 bool Controller::authUser ( std::string user, std::string pass )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Fix this
     return ( ( user == "poor" && pass == "poor" ) || ( user == "bab" && pass == "bab" ) || ( user == "admin" && pass == "admin" ) );
 }
@@ -64,15 +79,7 @@ bool Controller::isValidSlot ( std::string machine, int slot )
     //return false;
     return ( machine=="BD" && slot == 0 );
 }
-/*!\brief Constructor for controller.
- * Never called.
- */
-Controller::Controller()
-{
-#ifdef DEBUG
-    std::cout << "Controller constructor" << std::endl;
-#endif
-}
+
 /*!\brief Returns whether or not this user is valid.
  * \param username the username to check
  * \return Whether or not the username exists
@@ -81,6 +88,7 @@ Controller::Controller()
  */
 bool Controller::isValidUser ( std::string username )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Fix this
     return ( username == "bab" );
     //return false;
@@ -94,6 +102,7 @@ bool Controller::isValidUser ( std::string username )
  */
 void Controller::addToLog ( std::string username,std::vector<std::string>message )
 {
+    boost::mutex::scoped_lock lock ( mysqlMutex );
     ///\todo Fix this
     //start at vector[1]
 }
@@ -103,6 +112,7 @@ void Controller::addToLog ( std::string username,std::vector<std::string>message
  */
 bool Controller::isAdmin ( std::string user )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Fix this
     return ( user == "admin" );
 //	return false;
@@ -113,6 +123,7 @@ bool Controller::isAdmin ( std::string user )
  */
 bool Controller::removeUser ( std::string user )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Fix this
     return false;
 }
@@ -123,6 +134,7 @@ bool Controller::removeUser ( std::string user )
  */
 bool Controller::setAdmin ( std::string user, std::string admin )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Fix this
 //	bool setAdmin = admin == "true";
     return false;
@@ -135,6 +147,7 @@ bool Controller::setAdmin ( std::string user, std::string admin )
  */
 void Controller::shutdown ( bool restart )
 {
+    ///Hasn't been tested, but 98% sure this should work
     if ( restart )
     {
         system ( "shutdown -r now" );
@@ -155,6 +168,7 @@ void Controller::shutdown ( bool restart )
  */
 int Controller::drop ( std::string machine, std::string user, int slot )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo actually call the drop
     return 0;
 }
@@ -164,6 +178,7 @@ int Controller::drop ( std::string machine, std::string user, int slot )
  */
 int Controller::getCredits ( std::string user )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Implement
     if ( user != "poor" ) return 5;
     return 0;
@@ -174,6 +189,7 @@ int Controller::getCredits ( std::string user )
  */
 std::vector<int> Controller::getValidSlots ( std::string machine )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<int> returnVal;
     ///\todo Implement
     returnVal.push_back ( 0 );
@@ -185,6 +201,7 @@ std::vector<int> Controller::getValidSlots ( std::string machine )
  */
 std::vector<std::string> Controller::getStats ( std::string machine )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<std::string> result;
     result.push_back ( "0 \"Coke\" 50 13 200 true" );
     result.push_back ( "OK 1 Slots retrieved" );
@@ -200,6 +217,7 @@ std::vector<std::string> Controller::getStats ( std::string machine )
  */
 std::vector<std::string> Controller::getStats ( std::string machine, int slotNum )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<std::string> result;
     result.push_back ( "0 \"Coke\" 50 13 200 true" );
     result.push_back ( "OK 1 Slots retrieved" );
@@ -215,6 +233,7 @@ std::vector<std::string> Controller::getStats ( std::string machine, int slotNum
  */
 int Controller::getCost ( std::string machine, int slotNum )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo implement this
     return 1;
 }
@@ -225,6 +244,7 @@ int Controller::getCost ( std::string machine, int slotNum )
  */
 int Controller::getTemp ( std::string machine )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo Implement, -2000 means that there was a problem getting the temp
     ///\todo Change -2000 to a static const
     if ( machine != "BD" )
@@ -243,6 +263,7 @@ int Controller::getTemp ( std::string machine )
  */
 bool Controller::editCredits ( std::string user, int credits )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo Implement adding credits to a user
     return false;
 }
@@ -252,6 +273,7 @@ bool Controller::editCredits ( std::string user, int credits )
  */
 bool Controller::addUser ( std::string username )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo implement this
     return true;
 }
@@ -267,6 +289,7 @@ bool Controller::addUser ( std::string username )
  */
 bool Controller::editSlot ( std::string machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled )
 {
+    boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo implement this
     return true;
 }
@@ -277,6 +300,7 @@ bool Controller::editSlot ( std::string machine,int slotnum, std::string name, i
  */
 bool Controller::editUser ( std::string user, int credits )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo implement this
     return false;
 }
@@ -288,6 +312,7 @@ bool Controller::editUser ( std::string user, int credits )
  */
 bool Controller::editUser ( std::string user, int credits, bool admin )
 {
+    boost::mutex::scoped_lock lock ( ldapMutex );
     ///\todo implement this
     return false;
 }

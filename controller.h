@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <boost/thread.hpp>
 #ifdef DEBUG
 #include <iostream>
 #endif
@@ -84,6 +85,18 @@ class Controller
 {
     ///\todo Change this to private with command as a friend
 public:
+    ///The username used to connect to the mysql database
+    std::string mysqlUsername;
+    ///The password used to connect to the mysql database
+    std::string mysqlPassword;
+    ///The mysql database's address
+    std::string mysqlServerAddress;
+    ///used for the mysql commands
+    boost::mutex mysqlMutex;
+    ///used for the tini commands
+    boost::mutex tiniMutex;
+    ///used for the ldap commands
+    boost::mutex ldapMutex;
     ///The current version of the software.
     static const float version = .2;
     static Controller* Instance();

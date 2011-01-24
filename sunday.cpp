@@ -127,6 +127,7 @@ int SundayServer::handleClient ( int acceptedSock, std::string machine, int user
         }
         else
         {
+	    ///\todo:reset the inactivity timer here
             len = read ( acceptedSock, buf, sizeof ( buf ) );
         }
     }
