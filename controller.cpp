@@ -30,10 +30,26 @@ Controller::Controller()
 #ifdef DEBUG
     std::cout << "Controller constructor" << std::endl;
 #endif
-    mysqlUsername = "######";
-    mysqlPassword = "######";
+    mysqlUsername = "###";
+    mysqlPassword = "####";
     mysqlServerAddress = "127.0.0.1";
-    mysqlDbName = "#######";
+    mysqlDbName = "####";
+    mysqlPortNumber = 3306;
+    //Instantiate and connect to the server
+    conn = mysqlpp::Connection ( mysqlDbName.c_str(), mysqlServerAddress.c_str(),
+                                 mysqlUsername.c_str(), mysqlPassword.c_str(),
+                                 mysqlPortNumber );
+    if ( ! conn.connected() )
+    {
+        std::cerr << "Error Connecting to Mysql Database" << std::endl;
+    }
+    else
+    {
+#ifdef DEBUG
+        std::cout << "Connected to Mysql Database" << std::endl;
+#endif
+    }
+
     ///\todo double check to make sure the database isn't going to kick off an open connection if it idles too long
     ///\todo add code to handle if the program loses a connection with the database
 }

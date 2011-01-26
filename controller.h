@@ -94,6 +94,8 @@ public:
     std::string mysqlServerAddress;
     ///The mysql database's name
     std::string mysqlDbName;
+    ///The mysql database's port number
+    unsigned int mysqlPortNumber;
     ///the connection to the mysql server
     mysqlpp::Connection conn;
     ///used for the mysql commands
