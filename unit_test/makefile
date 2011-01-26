@@ -70,7 +70,9 @@ gtest_main.a : gtest-all.o gtest_main.o
 # function.
 
 unittest1.o : unittest1.cpp unittest1.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c unittest1.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c unittest1.cpp -I/usr/include/mysql -I/usr/include/mysql++/ -I/usr/local/include/mysql++/ -lmysqlpp -lmysqlclient 
+
 
 unittest1 : unittest1.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lboost_regex-mt -lboost_thread-mt $(USER_DIR)sunday.o $(USER_DIR)controller.o $(USER_DIR)command.o $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lboost_regex-mt -lboost_thread-mt $(USER_DIR)sunday.o $(USER_DIR)controller.o $(USER_DIR)command.o $^ -o $@ -I/usr/include/mysql -I/usr/include/mysql++/ -I/usr/local/include/mysql++/ -lmysqlpp -lmysqlclient 
+
