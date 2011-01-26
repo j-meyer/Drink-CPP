@@ -1,10 +1,8 @@
 #include "controller.h"
 #include <stdlib.h>
-#include <mysql.h>
 #ifdef DEBUG
 #include <iostream>
 #endif
-//sudo apt-get install libmysqlclient15-dev
 ///Reference to the controller instance.
 Controller* Controller::_instance = 0;
 ///Reference to the error messages.
@@ -35,6 +33,7 @@ Controller::Controller()
     mysqlUsername = "######";
     mysqlPassword = "######";
     mysqlServerAddress = "127.0.0.1";
+    mysqlDbName = "#######";
     ///\todo double check to make sure the database isn't going to kick off an open connection if it idles too long
     ///\todo add code to handle if the program loses a connection with the database
 }
@@ -147,7 +146,6 @@ bool Controller::setAdmin ( std::string user, std::string admin )
  */
 void Controller::shutdown ( bool restart )
 {
-    ///Hasn't been tested, but 98% sure this should work
     if ( restart )
     {
         system ( "shutdown -r now" );
@@ -168,7 +166,9 @@ void Controller::shutdown ( bool restart )
  */
 int Controller::drop ( std::string machine, std::string user, int slot )
 {
-    boost::mutex::scoped_lock lock ( tiniMutex );
+    ///\todo change this to something that allows multiple locks
+    boost::mutex::scoped_lock lock ( ldapMutex );
+    // boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo actually call the drop
     return 0;
 }

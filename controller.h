@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <boost/thread.hpp>
+#include <mysql++.h>
 #ifdef DEBUG
 #include <iostream>
 #endif
@@ -91,6 +92,10 @@ public:
     std::string mysqlPassword;
     ///The mysql database's address
     std::string mysqlServerAddress;
+    ///The mysql database's name
+    std::string mysqlDbName;
+    ///the connection to the mysql server
+    mysqlpp::Connection conn;
     ///used for the mysql commands
     boost::mutex mysqlMutex;
     ///used for the tini commands
