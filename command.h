@@ -22,7 +22,7 @@ class Command
     //let SundayServer grab access to all the functions
     friend class SundayServer;
 public:
-    Command ( int num, std::string machineName, int acceptedSock );
+    Command ( int num, int machineName, int acceptedSock );
     int interpretCommand ( char command[], int length );
     ///\todo switch to private, currently public for debugging purposes
 public:
@@ -34,7 +34,7 @@ public:
     ///The user's password
     std::string password;
     ///The machine the user is currently connected to
-    std::string machine;
+    int machine;
     ///Whether or not the user is authenticated
     bool authenticated;
     ///Whether or not the user is an admin

@@ -13,7 +13,7 @@ public:
      *controller used for
      *everything
      */
-    SundayServer ( std::string machine );
+    SundayServer ( int machine );
     /*! Actually starts the server
      */
     void startServer();
@@ -23,11 +23,11 @@ private:
     ///the number of users so far that have connected
     int userCount;
     ///the machine's name
-    std::string machine;
+    int machine;
     ///the file descriptor for the socket
     int sock;
     ///called when a socket is accepted
-    static int handleClient ( int acceptedSock, std::string machine, int userCount );
+    static int handleClient ( int acceptedSock, int machine, int userCount );
     ///tokenizes the arg by whitespace and returns it in a vector
     std::vector<std::string> tokenize ( char arg[], int length );
 };

@@ -30,10 +30,10 @@ Controller::Controller()
 #ifdef DEBUG
     std::cout << "Controller constructor" << std::endl;
 #endif
-    mysqlUsername = "###";
-    mysqlPassword = "####";
+    mysqlUsername = "#####";
+    mysqlPassword = "#####";
     mysqlServerAddress = "127.0.0.1";
-    mysqlDbName = "####";
+    mysqlDbName = "drinkNew";
     mysqlPortNumber = 3306;
     //Instantiate and connect to the server
     conn = mysqlpp::Connection ( mysqlDbName.c_str(), mysqlServerAddress.c_str(),
@@ -59,6 +59,7 @@ Controller::Controller()
  */
 Controller::~Controller()
 {
+    conn.disconnect();
     delete ( Instance() );
 }
 
@@ -88,11 +89,11 @@ bool Controller::isAvailable()
  * \param slot the slot number to check
  * \return Whether or not the slot is valid for the machine
  */
-bool Controller::isValidSlot ( std::string machine, int slot )
+bool Controller::isValidSlot ( int machine, int slot )
 {
     ///\todo Fix this
     //return false;
-    return ( machine=="BD" && slot == 0 );
+    return ( machine==0 && slot == 0 );
 }
 
 /*!\brief Returns whether or not this user is valid.
@@ -180,7 +181,7 @@ void Controller::shutdown ( bool restart )
  * Drops the drink, this function assumes that the user has enough credits.
  * ONCE AGAIN, DO NOT CALL THIS UNLESS THE USER HAS ENOUGH CREDITS OR YOU ARE RETARDED.
  */
-int Controller::drop ( std::string machine, std::string user, int slot )
+int Controller::drop ( int machine, std::string user, int slot )
 {
     ///\todo change this to something that allows multiple locks
     boost::mutex::scoped_lock lock ( ldapMutex );
@@ -203,7 +204,7 @@ int Controller::getCredits ( std::string user )
  * \param machine the machine to return the valid slots on
  * \return A vector containing all valid slots
  */
-std::vector<int> Controller::getValidSlots ( std::string machine )
+std::vector<int> Controller::getValidSlots ( int machine )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<int> returnVal;
@@ -215,7 +216,7 @@ std::vector<int> Controller::getValidSlots ( std::string machine )
  * \param machine the machine to return the stats on
  * \return All the stats for the machine.
  */
-std::vector<std::string> Controller::getStats ( std::string machine )
+std::vector<std::string> Controller::getStats ( int machine )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<std::string> result;
@@ -231,7 +232,7 @@ std::vector<std::string> Controller::getStats ( std::string machine )
  * \param slotNum the slot number to get the stat for
  * \return The stat for the specified machine and slot number
  */
-std::vector<std::string> Controller::getStats ( std::string machine, int slotNum )
+std::vector<std::string> Controller::getStats ( int machine, int slotNum )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     std::vector<std::string> result;
@@ -247,7 +248,7 @@ std::vector<std::string> Controller::getStats ( std::string machine, int slotNum
  * \param slotNum the slot number to get the stat for
  * \return The stat for the specified machine and slot number
  */
-int Controller::getCost ( std::string machine, int slotNum )
+int Controller::getCost ( int machine, int slotNum )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo implement this
@@ -258,12 +259,12 @@ int Controller::getCost ( std::string machine, int slotNum )
  * \return The temperature for the machine, -2000 if the machine doesn't support
  * temperature.
  */
-int Controller::getTemp ( std::string machine )
+int Controller::getTemp ( int machine )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo Implement, -2000 means that there was a problem getting the temp
     ///\todo Change -2000 to a static const
-    if ( machine != "BD" )
+    if ( machine != 0 )
     {
         return -2000;
     }
@@ -303,7 +304,7 @@ bool Controller::addUser ( std::string username )
  * \param enabled whether or not this slot is enabled
  * \return whether or not editing the slot was succesful
  */
-bool Controller::editSlot ( std::string machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled )
+bool Controller::editSlot ( int machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
     ///\todo implement this

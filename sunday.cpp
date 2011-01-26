@@ -22,7 +22,7 @@
  * Create and bind the socket and set it to listen
  *
  */
-SundayServer::SundayServer ( std::string machineName )
+SundayServer::SundayServer ( int machineName )
 {
     struct  sockaddr_in server; // server's IP address
     userCount = 0;
@@ -84,7 +84,7 @@ void SundayServer::startServer()
  *\param userCount the nth user to connect since the server has been started, used for debugging
  *\return 0 on success, other numbers on error
  */
-int SundayServer::handleClient ( int acceptedSock, std::string machine, int userCount )
+int SundayServer::handleClient ( int acceptedSock, int machine, int userCount )
 {
     char buf[512];   // data buffer
     int len;        // buffer length
@@ -127,7 +127,7 @@ int SundayServer::handleClient ( int acceptedSock, std::string machine, int user
         }
         else
         {
-	    ///\todo:reset the inactivity timer here
+            ///\todo:reset the inactivity timer here
             len = read ( acceptedSock, buf, sizeof ( buf ) );
         }
     }

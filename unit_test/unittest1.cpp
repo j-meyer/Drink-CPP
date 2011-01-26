@@ -77,8 +77,7 @@ std::string newUserPass = "tacobab";//a username that currently doesn't exist
 
 std::string validSlotNum = "0";//a slot that is validSlotNum
 std::string invalidSlotNum = "34343434";//an invalid slot num
-//TODO: replace all instances of BD with machineName
-std::string machineName = "BD";//name of the machine we're currently using
+int machineName = 0;//name of the machine we're currently using
 }
 
 //#############
@@ -531,7 +530,7 @@ TEST ( tempTest, Normal )
 //No temp for machine
 TEST ( tempTest, TempLilDrink )
 {
-    Command::Command command ( 0, "LD", 0 );
+    Command::Command command ( 0, 1, 0 );
     vector<string> arg;
     arg.push_back ( "temp" );
     EXPECT_EQ ( -351, command.temp ( arg ) );

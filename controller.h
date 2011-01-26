@@ -112,25 +112,25 @@ public:
     bool authUser ( std::string user, std::string pass );
     bool addUser ( std::string username );
     bool isAvailable();
-    bool editSlot ( std::string machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled );
-    bool isValidSlot ( std::string machine, int slot );
+    bool editSlot ( int machine,int slotnum, std::string name, int cost, int quantity, int numDropped, bool enabled );
+    bool isValidSlot ( int machine, int slot );
     bool isValidUser ( std::string username );
     void addToLog ( std::string username,
                     std::vector<std::string>message );
     bool isAdmin ( std::string user );
     bool removeUser ( std::string user );
     bool setAdmin ( std::string user, std::string admin );
-    int drop ( std::string machine, std::string user, int slot );
+    int drop ( int machine, std::string user, int slot );
     void shutdown ( bool restart );
     int getCredits ( std::string user );
     bool editCredits ( std::string user, int credits );
     bool editUser ( std::string user, int credits, bool admin );
     bool editUser ( std::string user, int credits );
-    int getCost ( std::string machine, int slot );
-    std::vector<int> getValidSlots ( std::string machine );
-    std::vector<std::string> getStats ( std::string machine );
-    std::vector<std::string> getStats ( std::string machine, int slotNum );
-    int getTemp ( std::string machine );
+    int getCost ( int machine, int slot );
+    std::vector<int> getValidSlots ( int machine );
+    std::vector<std::string> getStats ( int machine );
+    std::vector<std::string> getStats ( int machine, int slotNum );
+    int getTemp ( int machine );
 protected:
     Controller();
 private:

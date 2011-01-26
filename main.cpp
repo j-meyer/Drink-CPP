@@ -17,7 +17,7 @@ int main ( int argc, char* argv[] )
     srand ( time ( NULL ) );
     ///\todo Might change this to have the machine name specified by a
     ///config file or a command line switch.
-    SundayServer server = SundayServer ( "BD" );
+    SundayServer server = SundayServer ( 0 );
     server.startServer();
 }
 

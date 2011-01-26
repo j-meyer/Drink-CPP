@@ -21,7 +21,7 @@
  *
  * Sets all the class variables to false and empty strings.
  */
-Command::Command ( int num, std::string machineName, int acceptedSock )
+Command::Command ( int num, int machineName, int acceptedSock )
 {
     machine = machineName;
     control = Controller::Instance();
@@ -258,7 +258,8 @@ int Command::location ( std::vector<std::string> commands )
     }
     else
     {
-        std::string response = "OK " + machine + ".\n";
+        ///\todo add lookup for machine name here
+        std::string response = "OK  <MACHINE NAME> .\n";
         sendMessage ( response );
         return 0;
     }
