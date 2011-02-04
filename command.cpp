@@ -111,6 +111,7 @@ int Command::code ( std::vector<std::string> commands )
     return sendMessage ( 451 );
 }
 //DROP <slot index> [delay]
+///\todo look at the difference between the valid slots for delayed drop and non delayed drops
 /*!\brief Drops a drink.
  * \param commands a vector of strings containing the tokenized commands
  * \return An integer specifying the result
@@ -127,35 +128,41 @@ int Command::drop ( std::vector<std::string> commands )
     {
         return sendMessage ( 204 );
     }
-    else if ( commands.size() == 3 )
+    if ( ! boost::regex_match ( commands[1].c_str(), numbers ) )
+    {
+#ifdef DEBUG
+        std::cout << "Line 139 - Regex Failed" << std::endl;
+        std::cout << commands[1].c_str() << "*" << std::endl;
+#endif
+        return sendMessage ( 409 );
+    }
+    int slot;
+    int delay;
+    ///\todo change this to dynamic cast from boost
+    std::istringstream iss ( commands[1].c_str() );
+    iss >> slot;
+    if ( commands.size() != 3 && commands.size() != 2 )
+    {
+        return sendMessage ( 406 );
+    }
+    if ( ! control->isValidSlot ( machine,slot ) )
+    {
+        return sendMessage ( 409 );
+    }
+    if ( control->getCost ( machine , slot ) > control->getCredits ( username ) )
+    {
+        return sendMessage ( 203 );
+    }
+    if ( commands.size() == 3 )
     {
         //this is to check if this all numbers
-        if ( ! boost::regex_match ( commands[1].c_str(), numbers ) )
-        {
-#ifdef DEBUG
-            std::cout << "Line 139 - Regex Failed" << std::endl;
-            std::cout << commands[1].c_str() << "*" << std::endl;
-#endif
-            return sendMessage ( 409 );
-        }
-        else if ( ! boost::regex_match ( commands[2].c_str(), numbers ) )
+        if ( ! boost::regex_match ( commands[2].c_str(), numbers ) )
         {
             return sendMessage ( 403 );
         }
         else
         {
-            int slot;
-            int delay;
-            std::istringstream iss ( commands[1].c_str() );
-            iss >> slot;
-            if ( ! control->isValidSlot ( machine,slot ) )
-            {
-                return sendMessage ( 409 );
-            }
-            if ( control->getCost ( machine , slot ) > control->getCredits ( username ) )
-            {
-                return sendMessage ( 203 );
-            }
+            ///\todo change this to dynamic cast from boost
             std::istringstream dss ( commands[2].c_str() );
             dss >> delay;
             int result = control->drop ( machine, username, slot );
@@ -170,32 +177,19 @@ int Command::drop ( std::vector<std::string> commands )
             return 0;
         }
     }
-    else if ( ( commands.size() == 2 ) )
-    {
-        if ( ! boost::regex_match ( commands[1].c_str(), numbers ) )
-        {
-            return sendMessage ( 409 );
-        }
-        else
-        {
-            int slot;
-            std::istringstream iss ( commands[1].c_str() );
-            iss >> slot;
-            int result = control->drop ( machine, username, slot );
-            if ( result < 0 )
-            {
-                return sendMessage ( -result );
-            }
-            std::stringstream ss;
-            ss <<"OK Credits remaining: "<<control->getCredits ( username ) << "\n";
-            std::string response = ss.str();
-            sendMessage ( response );
-            return 0;
-        }
-    }
+    //only time this is hit is when commands.size == 2
     else
     {
-        return sendMessage ( 406 );
+        int result = control->drop ( machine, username, slot );
+        if ( result < 0 )
+        {
+            return sendMessage ( -result );
+        }
+        std::stringstream ss;
+        ss <<"OK Credits remaining: "<<control->getCredits ( username ) << "\n";
+        std::string response = ss.str();
+        sendMessage ( response );
+        return 0;
     }
 }
 /*!\brief The balance.
