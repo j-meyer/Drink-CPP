@@ -30,10 +30,10 @@ Controller::Controller()
 #ifdef DEBUG
     std::cout << "Controller constructor" << std::endl;
 #endif
-    mysqlUsername = "########";
-    mysqlPassword = "########";
+    mysqlUsername = "#####";
+    mysqlPassword = "#####";
     mysqlServerAddress = "127.0.0.1";
-    mysqlDbName = "########";
+    mysqlDbName = "#####";
     mysqlPortNumber = 3306;
     //Instantiate and connect to the server
     conn = mysqlpp::Connection ( mysqlDbName.c_str(), mysqlServerAddress.c_str(),
@@ -91,18 +91,16 @@ bool Controller::isAvailable()
  */
 bool Controller::isValidSlot ( int machine, int slot )
 {
-    ///\todo Fix this
     //select count(snum) from slotProperty where mid = <machine> and snum = <slot> and disabled = 0
-    mysqlpp::Query::Query query = mysqlpp::Query::Query(&conn, false, 
-      ("select count(snum) > 0 from slotProperty where mid=" 
-      + boost::lexical_cast<std::string>(machine) + "and snum=" 
-      + boost::lexical_cast<std::string>(slot) + " and disabled=0").c_str());
-    #ifdef DEBUG
-      std::cout << query.exec() << std::endl;
-    #endif
-    
-    //return false;
-    return ( query.exec() );
+    mysqlpp::Query::Query query = mysqlpp::Query::Query ( &conn, false,
+                                  ( "select * from slotProperty where mid="
+                                    + boost::lexical_cast<std::string> ( machine ) + " and snum="
+                                    + boost::lexical_cast<std::string> ( slot ) + " and disabled=0" ).c_str() );
+    mysqlpp::StoreQueryResult res = query.store();
+#ifdef DEBUG
+    std::cout << "Is Valid Slot # Rows: " <<  res.num_rows() << std::endl;
+#endif
+    return ( res.num_rows() == 1 );
 }
 
 /*!\brief Returns whether or not this user is valid.
