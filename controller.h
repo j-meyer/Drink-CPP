@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <boost/thread.hpp>
+#include <boost/lexical_cast.hpp>
 #include <mysql++.h>
 #ifdef DEBUG
 #include <iostream>
