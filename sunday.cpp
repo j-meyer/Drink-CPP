@@ -71,7 +71,6 @@ void SundayServer::startServer()
 #endif
         ///\todo start a timer once connected so we can kick someone off
         // 		/*after 1 minute of not touching anything
-        //On accept: fork
         int acceptedSock = accept ( sock, 0, 0 );
         boost::thread newThr ( SundayServer::handleClient, acceptedSock, machine, userCount );
         ++userCount;
