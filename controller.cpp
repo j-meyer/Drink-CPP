@@ -30,11 +30,11 @@ Controller::Controller()
 #ifdef DEBUG
     std::cout << "Controller constructor" << std::endl;
 #endif
-    mysqlUsername = "#####";
-    mysqlPassword = "#####";
+	mysqlUsername = "####";
+    mysqlPassword = "####";
     mysqlServerAddress = "127.0.0.1";
-    mysqlDbName = "#####";
-    mysqlPortNumber = 3306;
+    mysqlDbName = "####";
+	mysqlPortNumber = 3306;
     //Instantiate and connect to the server
     conn = mysqlpp::Connection ( mysqlDbName.c_str(), mysqlServerAddress.c_str(),
                                  mysqlUsername.c_str(), mysqlPassword.c_str(),
@@ -92,7 +92,7 @@ bool Controller::isAvailable()
 bool Controller::isValidSlot ( int machine, int slot )
 {
     //select count(snum) from slotProperty where mid = <machine> and snum = <slot> and disabled = 0
-    mysqlpp::Query::Query query = mysqlpp::Query::Query ( &conn, false,
+    mysqlpp::Query query = mysqlpp::Query ( &conn, false,
                                   ( "select * from slotProperty where mid="
                                     + boost::lexical_cast<std::string> ( machine ) + " and snum="
                                     + boost::lexical_cast<std::string> ( slot ) + " and disabled=0" ).c_str() );

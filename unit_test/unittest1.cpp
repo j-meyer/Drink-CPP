@@ -10,14 +10,14 @@ namespace
 class CommandTest : public ::testing::Test
 {
 protected:
-    //typedef Command::Command command;
+    //typedef Command command;
     // The fixture for testing class Foo.
     // You can remove any or all of the following functions if its body
     // is empty.
     CommandTest()
     {
         // You can do set-up work for each test here.
-        //Command::Command command(0, "BD");
+        //Command command(0, "BD");
     }
     virtual ~CommandTest()
     {
@@ -86,7 +86,7 @@ int machineName = 0;//name of the machine we're currently using
 //Passes if it returns bad parameters when supplying too many
 TEST ( acctmgrchkTest, WrongNumOfArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "acctmgrchk" );
     arg.push_back ( accountName );
@@ -96,7 +96,7 @@ TEST ( acctmgrchkTest, WrongNumOfArgs )
 //Passes if the server actually passes
 TEST ( acctmgrchkTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "acctmgrchk" );
     command.acctmgrchk ( arg );
@@ -108,7 +108,7 @@ TEST ( acctmgrchkTest, Normal )
 //Passes if it isn't implemented
 TEST ( chpassTest, NotImplemented )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "chpass" );
     arg.push_back ( accountName );
@@ -121,7 +121,7 @@ TEST ( chpassTest, NotImplemented )
 //Passes if it isn't implemented
 TEST ( codeTest, NotImplemented )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "code" );
     arg.push_back ( "5" );
@@ -134,7 +134,7 @@ TEST ( codeTest, NotImplemented )
 //#############
 TEST ( dropTest, NormalNoDelay )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -151,7 +151,7 @@ TEST ( dropTest, NormalNoDelay )
 }
 TEST ( dropTest, NormalDelay )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -169,7 +169,7 @@ TEST ( dropTest, NormalDelay )
 //Too many args
 TEST ( dropTest, WrongNumOfArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -188,7 +188,7 @@ TEST ( dropTest, WrongNumOfArgs )
 //Invalid Slot
 TEST ( dropTest, InvalidSlot )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -206,7 +206,7 @@ TEST ( dropTest, InvalidSlot )
 //Poor User
 TEST ( dropTest, PoorUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( poorUsername );
@@ -224,7 +224,7 @@ TEST ( dropTest, PoorUser )
 //Need to login
 TEST ( dropTest, NoLogin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -241,7 +241,7 @@ TEST ( dropTest, NoLogin )
 //TODO: maybe combine this with above
 TEST ( dropDelayTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -259,7 +259,7 @@ TEST ( dropDelayTest, Normal )
 //Invalid Delay
 TEST ( dropDelayTest, InvalidDelay )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -280,7 +280,7 @@ TEST ( dropDelayTest, InvalidDelay )
 //Normal User get balance
 TEST ( getBalanceTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -296,7 +296,7 @@ TEST ( getBalanceTest, Normal )
 //Get balance no login
 TEST ( getBalanceTest, NoLogin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -308,7 +308,7 @@ TEST ( getBalanceTest, NoLogin )
 //Get balance too many args
 TEST ( getBalanceTest, InvalidArgNum )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -329,7 +329,7 @@ TEST ( getBalanceTest, InvalidArgNum )
 //Normal get location
 TEST ( locationTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "location" );
     EXPECT_EQ ( 0, command.location ( arg ) );
@@ -337,7 +337,7 @@ TEST ( locationTest, Normal )
 //Get location bad args
 TEST ( locationTest, InvalidArgNum )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "location" );
     arg.push_back ( "location" );
@@ -350,7 +350,7 @@ TEST ( locationTest, InvalidArgNum )
 //Normal pass
 TEST ( passTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -363,7 +363,7 @@ TEST ( passTest, Normal )
 //Invalid password
 TEST ( passTest, InvalidPassword )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -376,7 +376,7 @@ TEST ( passTest, InvalidPassword )
 //No user command entered
 TEST ( passTest, NoUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "pass" );
     arg.push_back ( accountPw );
@@ -385,7 +385,7 @@ TEST ( passTest, NoUser )
 //Too many args
 TEST ( passTest, InvalidNumArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -402,7 +402,7 @@ TEST ( passTest, InvalidNumArgs )
 //Normal quit
 TEST ( quitTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "quit" );
     EXPECT_EQ ( -1, command.quit ( arg ) );
@@ -413,7 +413,7 @@ TEST ( quitTest, Normal )
 //Normal rand
 TEST ( randTest, NormalNoDelay )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -429,7 +429,7 @@ TEST ( randTest, NormalNoDelay )
 //Rand Normal delay
 TEST ( randTest, NormalDelay )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -446,7 +446,7 @@ TEST ( randTest, NormalDelay )
 //Rand no login
 TEST ( randTest, NoLogin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "rand" );
     EXPECT_EQ ( -204, command.rand ( arg ) );
@@ -454,7 +454,7 @@ TEST ( randTest, NoLogin )
 //Rand poor
 TEST ( randTest, Poor )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( poorUsername );
@@ -474,7 +474,7 @@ TEST ( randTest, Poor )
 //Stat - no index
 TEST ( statTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "stat" );
     EXPECT_EQ ( 0, command.stat ( arg ) );
@@ -482,7 +482,7 @@ TEST ( statTest, Normal )
 //Stat - index
 TEST ( statTest, NormalIndex )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "stat" );
     arg.push_back ( validSlotNum );
@@ -491,7 +491,7 @@ TEST ( statTest, NormalIndex )
 //Stat - bad index
 TEST ( statTest, BadIndex )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "stat" );
     arg.push_back ( invalidSlotNum );
@@ -500,7 +500,7 @@ TEST ( statTest, BadIndex )
 //Stat - invalid index
 TEST ( statTest, InvalidIndex )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "stat" );
     arg.push_back ( "bab" );
@@ -509,7 +509,7 @@ TEST ( statTest, InvalidIndex )
 //Stat - too many params
 TEST ( statTest, BadNumArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "stat" );
     arg.push_back ( validSlotNum );
@@ -522,7 +522,7 @@ TEST ( statTest, BadNumArgs )
 //Temp Normal
 TEST ( tempTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "temp" );
     EXPECT_EQ ( 0, command.temp ( arg ) );
@@ -530,7 +530,7 @@ TEST ( tempTest, Normal )
 //No temp for machine
 TEST ( tempTest, TempLilDrink )
 {
-    Command::Command command ( 0, 1, 0 );
+    Command command ( 0, 1, 0 );
     vector<string> arg;
     arg.push_back ( "temp" );
     EXPECT_EQ ( -351, command.temp ( arg ) );
@@ -538,7 +538,7 @@ TEST ( tempTest, TempLilDrink )
 //Too many args
 TEST ( tempTest, BadNumArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "temp" );
     arg.push_back ( "temp" );
@@ -552,7 +552,7 @@ TEST ( tempTest, BadNumArgs )
 //User Normal
 TEST ( userTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -561,7 +561,7 @@ TEST ( userTest, Normal )
 //User no username
 TEST ( userTest, NoUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     EXPECT_EQ ( -406, command.user ( arg ) );
@@ -569,7 +569,7 @@ TEST ( userTest, NoUser )
 //User too many args
 TEST ( userTest, BadNumArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -582,7 +582,7 @@ TEST ( userTest, BadNumArgs )
 //Version Normal
 TEST ( versionTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "version" );
     EXPECT_EQ ( 0, command.version ( arg ) );
@@ -590,7 +590,7 @@ TEST ( versionTest, Normal )
 //Version Bad args
 TEST ( versionTest, BadNumArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "version" );
     arg.push_back ( "bab" );
@@ -602,7 +602,7 @@ TEST ( versionTest, BadNumArgs )
 //Normal Add Credits
 TEST ( addCreditsTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -620,7 +620,7 @@ TEST ( addCreditsTest, Normal )
 //Add Credits, No admin
 TEST ( addCreditsTest, NoAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -638,7 +638,7 @@ TEST ( addCreditsTest, NoAdmin )
 //Add Credits, bad username
 TEST ( addCreditsTest, InvalidUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -656,7 +656,7 @@ TEST ( addCreditsTest, InvalidUser )
 //Add Credits invalid credits
 TEST ( addCreditsTest, InvalidCredits )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -674,7 +674,7 @@ TEST ( addCreditsTest, InvalidCredits )
 //Add Credits Bad Args
 TEST ( addCreditsTest, BadArgAmt )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -696,7 +696,7 @@ TEST ( addCreditsTest, BadArgAmt )
 //Normal Add User
 TEST ( addUserTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -713,7 +713,7 @@ TEST ( addUserTest, Normal )
 //Normal Add User/pass
 TEST ( addUserTest, NormalPass )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -732,7 +732,7 @@ TEST ( addUserTest, NormalPass )
 //Add User, No admin
 TEST ( addUserTest, NoAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -749,7 +749,7 @@ TEST ( addUserTest, NoAdmin )
 //Add User, dup username
 TEST ( addUserTest, DupUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -766,7 +766,7 @@ TEST ( addUserTest, DupUser )
 //Add User Bad Args
 TEST ( addUserTest, BadArgAmt )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -789,7 +789,7 @@ TEST ( addUserTest, BadArgAmt )
 //Edit Slot Normal
 TEST ( editSlotTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -811,7 +811,7 @@ TEST ( editSlotTest, Normal )
 //Edit Slot Invalid Slot
 TEST ( editSlotTest, InvalidSlot )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -833,7 +833,7 @@ TEST ( editSlotTest, InvalidSlot )
 //Edit Slot Invalid Name
 TEST ( editSlotTest, InvalidName )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -855,7 +855,7 @@ TEST ( editSlotTest, InvalidName )
 //Edit Slot Invalid Cost
 TEST ( editSlotTest, InvalidCost )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -877,7 +877,7 @@ TEST ( editSlotTest, InvalidCost )
 //Edit Slot Invalid Quantity
 TEST ( editSlotTest, InvalidQuantity )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -899,7 +899,7 @@ TEST ( editSlotTest, InvalidQuantity )
 //Edit slot Invalid Num Dropped
 TEST ( editSlotTest, InvalidNumDropped )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -921,7 +921,7 @@ TEST ( editSlotTest, InvalidNumDropped )
 //Edit slot Invalid enable flag
 TEST ( editSlotTest, InvalidEnableFlag )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -943,7 +943,7 @@ TEST ( editSlotTest, InvalidEnableFlag )
 //Edit slot Invalid Parameters
 TEST ( editSlotTest, InvalidParams )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -966,7 +966,7 @@ TEST ( editSlotTest, InvalidParams )
 //Edit slot not admin
 TEST ( editSlotTest, NotAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -992,7 +992,7 @@ TEST ( editSlotTest, NotAdmin )
 //Edit User Normal
 TEST ( editUserTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1009,7 +1009,7 @@ TEST ( editUserTest, Normal )
 }
 TEST ( editUserTest, NormalNegCredits )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1027,7 +1027,7 @@ TEST ( editUserTest, NormalNegCredits )
 //Edit User Set Admin
 TEST ( editUserTest, NormalSetAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1047,7 +1047,7 @@ TEST ( editUserTest, NormalSetAdmin )
 //Edit User Invalid User
 TEST ( editUserTest, InvalidUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1065,7 +1065,7 @@ TEST ( editUserTest, InvalidUser )
 //Edit User Invalid Credits
 TEST ( editUserTest, InvalidCredits )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1083,7 +1083,7 @@ TEST ( editUserTest, InvalidCredits )
 //Edit User Invalid Admin Flag
 TEST ( editUserTest, InvalidAdminFlag )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1102,7 +1102,7 @@ TEST ( editUserTest, InvalidAdminFlag )
 //Edit User Invalid Parameters
 TEST ( editUserTest, InvalidParam )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1122,7 +1122,7 @@ TEST ( editUserTest, InvalidParam )
 //Edit User Not authenticated
 TEST ( editUserTest, NotAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -1144,7 +1144,7 @@ TEST ( editUserTest, NotAdmin )
 //Normal test, should pass with success
 TEST ( isValidUserTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1161,7 +1161,7 @@ TEST ( isValidUserTest, Normal )
 //Too many arguments
 TEST ( isValidUserTest, TooManyArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1179,7 +1179,7 @@ TEST ( isValidUserTest, TooManyArgs )
 //Too few arguments
 TEST ( isValidUserTest, TooFewArgs )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1195,7 +1195,7 @@ TEST ( isValidUserTest, TooFewArgs )
 //Non admin
 TEST ( isValidUserTest, NonAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -1214,7 +1214,7 @@ TEST ( isValidUserTest, NonAdmin )
 //*****************
 TEST ( logTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1230,7 +1230,7 @@ TEST ( logTest, Normal )
 //Test non admin users
 TEST ( logTest, NonAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -1250,7 +1250,7 @@ TEST ( logTest, NonAdmin )
 //Normal Test
 TEST ( queryAdminTest, Normal )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1267,7 +1267,7 @@ TEST ( queryAdminTest, Normal )
 //Not Admin Test
 TEST ( queryAdminTest, NonAdmin )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( accountName );
@@ -1284,7 +1284,7 @@ TEST ( queryAdminTest, NonAdmin )
 //Invalid User Test
 TEST ( queryAdminTest, InvalidUser )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );
@@ -1301,7 +1301,7 @@ TEST ( queryAdminTest, InvalidUser )
 //Invalid Num of Params
 TEST ( queryAdminTest, InvalidNumParams )
 {
-    Command::Command command ( 0, machineName, 0 );
+    Command command ( 0, machineName, 0 );
     vector<string> arg;
     arg.push_back ( "user" );
     arg.push_back ( adminName );

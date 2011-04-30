@@ -6,6 +6,7 @@
 #include <boost/thread.hpp>
 #include <boost/lexical_cast.hpp>
 #include <mysql++.h>
+#include <mysql.h>
 #ifdef DEBUG
 #include <iostream>
 #endif
