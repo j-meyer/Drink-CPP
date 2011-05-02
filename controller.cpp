@@ -1,5 +1,4 @@
 #include "controller.h"
-#include <stdlib.h>
 #ifdef DEBUG
 #include <iostream>
 #endif

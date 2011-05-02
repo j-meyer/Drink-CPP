@@ -1,15 +1,11 @@
 //Contains all the fun code that needs to be run when a user actually enters
 //in a command
 #include "command.h"
-#include "controller.h"
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <cstring>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sstream>
-#include <stdio.h>
 #include <boost/regex.hpp>
 
 
