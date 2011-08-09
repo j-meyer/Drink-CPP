@@ -1,1 +1,3 @@
 Work in progress.
+
+Make sure libmysql++-dev, libboost-thread-dev, and libboost-regex-dev are installed.
