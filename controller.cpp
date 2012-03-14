@@ -29,11 +29,11 @@ Controller::Controller()
 #ifdef DEBUG
     std::cout << "Controller constructor" << std::endl;
 #endif
-	mysqlUsername = "####";
+    mysqlUsername = "####";
     mysqlPassword = "####";
-    mysqlServerAddress = "127.0.0.1";
+    mysqlServerAddress = "####";
     mysqlDbName = "####";
-	mysqlPortNumber = 3306;
+    mysqlPortNumber = 3306;
     //Instantiate and connect to the server
     conn = mysqlpp::Connection ( mysqlDbName.c_str(), mysqlServerAddress.c_str(),
                                  mysqlUsername.c_str(), mysqlPassword.c_str(),
@@ -185,7 +185,7 @@ void Controller::shutdown ( bool restart )
  * \return An integer specifying the result(0 for success, -n for failure)
  *
  * Drops the drink, this function assumes that the user has enough credits.
- * ONCE AGAIN, DO NOT CALL THIS UNLESS THE USER HAS ENOUGH CREDITS OR YOU ARE RETARDED.
+ * ONCE AGAIN, DO NOT CALL THIS UNLESS THE USER HAS ENOUGH CREDITS.
  */
 int Controller::drop ( int machine, std::string user, int slot )
 {
@@ -262,17 +262,16 @@ int Controller::getCost ( int machine, int slotNum )
 }
 /*!\brief Returns the temperature of the machine.
  * \param machine the machine to check the temperature on
- * \return The temperature for the machine, -2000 if the machine doesn't support
+ * \return The temperature for the machine, INVALID_TEMPERATURE if the machine doesn't support
  * temperature.
  */
 int Controller::getTemp ( int machine )
 {
     boost::mutex::scoped_lock lock ( tiniMutex );
-    ///\todo Implement, -2000 means that there was a problem getting the temp
-    ///\todo Change -2000 to a static const
+
     if ( machine != 0 )
     {
-        return -2000;
+        return INVALID_TEMPERATURE;
     }
     else
     {

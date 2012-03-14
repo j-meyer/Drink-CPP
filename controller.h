@@ -108,6 +108,8 @@ public:
     boost::mutex ldapMutex;
     ///The current version of the software.
     static const float version = .2;
+    //The number used for an invalid temperature
+    static const int INVALID_TEMPERATURE = -2000;
     static Controller* Instance();
     static ErrorMessages* err;
     ~Controller();
